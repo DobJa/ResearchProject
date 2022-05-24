@@ -35,35 +35,43 @@ model = tf.keras.Sequential([
 ])
 
 
-
+labels = {}
 
 model.compile(optimizer = tf.keras.optimizers.RMSprop(learning_rate=0.0001),
               loss = tf.keras.losses.SparseCategoricalCrossentropy(from_logits=False),
               metrics=['accuracy'])
+index = 0
+for cat in os.listdir(TRAINDATADIR):
+    labels[index] = cat
+    index+=1
 
-
+index = 0
 for cat in os.listdir(TRAINDATADIR):
     cat_path = os.path.join(TRAINDATADIR, str(cat))
+    index += 1
     for img in os.listdir(cat_path):
         entry = cv2.imread(cat_path + '/' + str(img))
         entry = entry / 255.0
         entry = cv2.resize(entry, (80,80), interpolation=cv2.INTER_NEAREST)
         data_list.append(entry)
-        label_list.append(cat)
+        label_list.append(index)
 x_train= np.array(data_list)
 y_train = np.array(label_list)
 
 data_list.clear()
 label_list.clear()
 
+
+index = 0
 for cat in os.listdir(VALDATADIR):
     cat_path = os.path.join(VALDATADIR, str(cat))
+    index += 1
     for img in os.listdir(cat_path):
         entry = cv2.imread(cat_path + '/' + str(img))
         entry = entry / 255.0
         entry = cv2.resize(entry, (80,80), interpolation=cv2.INTER_NEAREST)
         data_list.append(entry)
-        label_list.append(cat)
+        label_list.append(index)
 x_validate = np.array(data_list)
 y_validate = np.array(label_list)
 
@@ -71,17 +79,21 @@ data_list.clear()
 label_list.clear()
 
 
+
+index = 0
 for cat in os.listdir(TESTDATADIR):
     cat_path = os.path.join(TESTDATADIR, str(cat))
+    index += 1
     for img in os.listdir(cat_path):
         entry = cv2.imread(cat_path + '/' + str(img))
         entry = entry / 255.0
         entry = cv2.resize(entry, (80,80), interpolation=cv2.INTER_NEAREST)
         data_list.append(entry)
-        label_list.append(cat)
+        label_list.append(index)
 x_test = np.array(data_list)
 y_test = np.array(label_list)
 
+index = 0
 data_list.clear()
 label_list.clear()
 
