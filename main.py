@@ -16,7 +16,7 @@ VALDATADIR = "./valid"
 data_list = []
 label_list = []
 
-base_model = tf.keras.applications.ResNet101V2(input_shape = (125,125,3),
+base_model = tf.keras.applications.ResNet101V2(input_shape = (140,140,3),
                                                include_top = False,
                                                weights = "imagenet")
 base_model.trainable = False
@@ -52,11 +52,11 @@ for cat in os.listdir(TRAINDATADIR):
     for img in os.listdir(cat_path):
         entry = cv2.imread(cat_path + '/' + str(img))
         entry = entry / 255.0
-        entry = cv2.resize(entry, (125,125), interpolation=cv2.INTER_NEAREST)
+        entry = cv2.resize(entry, (140,140), interpolation=cv2.INTER_NEAREST)
         data_list.append(entry)
         label_list.append(index)
         entrycount += 1
-        if(entrycount == 67):
+        if(entrycount == 50):
             entrycount = 0
             break
     index += 1
@@ -78,7 +78,7 @@ for cat in os.listdir(VALDATADIR):
     for img in os.listdir(cat_path):
         entry = cv2.imread(cat_path + '/' + str(img))
         entry = entry / 255.0
-        entry = cv2.resize(entry, (125,125), interpolation=cv2.INTER_NEAREST)
+        entry = cv2.resize(entry, (140,140), interpolation=cv2.INTER_NEAREST)
         data_list.append(entry)
         label_list.append(index)
     index += 1
@@ -101,7 +101,7 @@ for cat in os.listdir(TESTDATADIR):
     for img in os.listdir(cat_path):
         entry = cv2.imread(cat_path + '/' + str(img))
         entry = entry / 255.0
-        entry = cv2.resize(entry, (125,125), interpolation=cv2.INTER_NEAREST)
+        entry = cv2.resize(entry, (140,140), interpolation=cv2.INTER_NEAREST)
         data_list.append(entry)
         label_list.append(index)
     index += 1
@@ -119,7 +119,7 @@ label_list.clear()
 
 
 history = model.fit(x_train,y_train, batch_size = 32,
-                    epochs = 5,
+                    epochs = 10,
                     shuffle=True,
                     validation_data = (x_validate, y_validate))
 
