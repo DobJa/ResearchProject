@@ -16,13 +16,13 @@ VALDATADIR = "./valid"
 data_list = []
 label_list = []
 
-base_model = tf.keras.applications.ResNet101V2(input_shape = (80,80,3),
+base_model = tf.keras.applications.ResNet101V2(input_shape = (125,125,3),
                                                include_top = False,
                                                weights = "imagenet")
 base_model.trainable = False
 global_average_layer = tf.keras.layers.GlobalAveragePooling2D()
-disc_layer1 = tf.keras.layers.Dense(1024, activation = "relu")
-disc_layer2 = tf.keras.layers.Dense(512, activation = "relu")
+disc_layer1 = tf.keras.layers.Dense(2048, activation = "relu")
+disc_layer2 = tf.keras.layers.Dense(1024, activation = "relu")
 prediction_layer = tf.keras.layers.Dense(400, activation = "softmax")
 
 
@@ -30,6 +30,7 @@ model = tf.keras.Sequential([
     base_model,
     global_average_layer,
     disc_layer1,
+    disc_layer2,
     prediction_layer
 ])
 
@@ -45,14 +46,19 @@ model.compile(optimizer = tf.keras.optimizers.RMSprop(learning_rate=0.0001),
               metrics=['accuracy'])
 
 index = 0
+entrycount = 0
 for cat in os.listdir(TRAINDATADIR):
     cat_path = os.path.join(TRAINDATADIR, str(cat))
     for img in os.listdir(cat_path):
         entry = cv2.imread(cat_path + '/' + str(img))
         entry = entry / 255.0
-        entry = cv2.resize(entry, (80,80), interpolation=cv2.INTER_NEAREST)
+        entry = cv2.resize(entry, (125,125), interpolation=cv2.INTER_NEAREST)
         data_list.append(entry)
         label_list.append(index)
+        entrycount += 1
+        if(entrycount == 50):
+            entrycount = 0
+            break
     index += 1
 x_train= np.array(data_list)
 y_train = np.array(label_list)
@@ -72,7 +78,7 @@ for cat in os.listdir(VALDATADIR):
     for img in os.listdir(cat_path):
         entry = cv2.imread(cat_path + '/' + str(img))
         entry = entry / 255.0
-        entry = cv2.resize(entry, (80,80), interpolation=cv2.INTER_NEAREST)
+        entry = cv2.resize(entry, (125,125), interpolation=cv2.INTER_NEAREST)
         data_list.append(entry)
         label_list.append(index)
     index += 1
@@ -95,7 +101,7 @@ for cat in os.listdir(TESTDATADIR):
     for img in os.listdir(cat_path):
         entry = cv2.imread(cat_path + '/' + str(img))
         entry = entry / 255.0
-        entry = cv2.resize(entry, (80,80), interpolation=cv2.INTER_NEAREST)
+        entry = cv2.resize(entry, (125,125), interpolation=cv2.INTER_NEAREST)
         data_list.append(entry)
         label_list.append(index)
     index += 1
