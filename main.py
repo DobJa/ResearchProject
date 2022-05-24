@@ -30,7 +30,6 @@ model = tf.keras.Sequential([
     base_model,
     global_average_layer,
     disc_layer1,
-    disc_layer2,
     prediction_layer
 ])
 
@@ -114,7 +113,7 @@ label_list.clear()
 
 
 history = model.fit(x_train,y_train, batch_size = 32,
-                    epochs = 5,
+                    epochs = 7,
                     shuffle=True,
                     validation_data = (x_validate, y_validate))
 
