@@ -56,7 +56,7 @@ for cat in os.listdir(TRAINDATADIR):
         data_list.append(entry)
         label_list.append(index)
         entrycount += 1
-        if(entrycount == 50):
+        if(entrycount == 67):
             entrycount = 0
             break
     index += 1
@@ -119,7 +119,7 @@ label_list.clear()
 
 
 history = model.fit(x_train,y_train, batch_size = 32,
-                    epochs = 7,
+                    epochs = 5,
                     shuffle=True,
                     validation_data = (x_validate, y_validate))
 
