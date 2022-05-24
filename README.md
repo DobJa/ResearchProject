@@ -1,0 +1,1 @@
+Research project regarding the impact of powercapping on the time and quality of DNN training on an example of 400 birds dataset from [kaggle.com](https://www.kaggle.com/datasets/gpiosenka/100-bird-species)
