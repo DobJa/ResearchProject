@@ -4,9 +4,14 @@ import os
 import cv2
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
-TESTDATADIR = "/home/gk99/Apps/python_env/venv/birdsDataset/archive/test"
-TRAINDATADIR = "/home/gk99/Apps/python_env/venv/birdsDataset/archive/train"
-VALDATADIR = "/home/gk99/Apps/python_env/venv/birdsDataset/archive/valid"
+#TESTDATADIR = "/home/gk99/Apps/python_env/venv/birdsDataset/archive/test"
+#TRAINDATADIR = "/home/gk99/Apps/python_env/venv/birdsDataset/archive/train"
+#VALDATADIR = "/home/gk99/Apps/python_env/venv/birdsDataset/archive/valid"
+
+
+TESTDATADIR = "./test"
+TRAINDATADIR = "./train"
+VALDATADIR = "./valid"
 
 data_list = []
 label_list = []
