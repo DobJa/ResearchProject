@@ -85,7 +85,6 @@ y_test = np.array(label_list)
 data_list.clear()
 label_list.clear()
 
-print(y_test)
 
 history = model.fit(x_train,y_train, batch_size = 32,
                     epochs = 15,
